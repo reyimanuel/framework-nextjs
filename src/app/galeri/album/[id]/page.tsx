@@ -23,7 +23,7 @@ export function generateMetadata({ params }: Props): Metadata {
   }
 }
 
-export default function AlbumPage({ params }: Props) {
+export default async function AlbumPage({ params }: Props) {
   // In a real application, you would fetch the album details based on the ID
   // For now, we'll use mock data
 

@@ -1,6 +1,6 @@
 Ini adalah Repository Front-End Website Sistem Informasi HME FT Unsrat menggunakan nextjs dan tailwind
 
-## Getting Started
+## Tutorial menjalankan project
 1. Download nodejs -> https://nodejs.org/en/download
 
 2. Buka Command Prompt dan cek apakah nodejs sudah terinstall atau belum

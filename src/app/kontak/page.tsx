@@ -2,9 +2,7 @@ import HeroShared from "@/components/shared/HeroShared"
 import ContactInfo from "@/components/kontak/ContactInfo"
 import ContactForm from "@/components/kontak/ContactForm"
 import LocationMap from "@/components/kontak/LocationMap"
-import { CiMap } from "react-icons/ci";
 import type { Metadata } from "next"
-import { FaInstagramSquare } from "react-icons/fa";
 
 
 export const metadata: Metadata = {

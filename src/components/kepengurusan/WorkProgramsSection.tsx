@@ -4,7 +4,7 @@ import { useState } from "react"
 import { FaArrowUp, FaArrowDown, FaPeopleGroup, FaPersonShelter, FaHandsPraying } from "react-icons/fa6";
 import { BsFillMortarboardFill, } from "react-icons/bs";
 import { FaTrophy, FaPeopleCarry, } from "react-icons/fa";
-import { PiHandsPrayingBold, PiMoneyFill, PiStudentFill } from "react-icons/pi";
+import { PiMoneyFill, PiStudentFill } from "react-icons/pi";
 
 export default function WorkProgramsSection() {
   const [activeAccordion, setActiveAccordion] = useState("collapseOne")

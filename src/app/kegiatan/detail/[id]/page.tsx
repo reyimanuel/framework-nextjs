@@ -2,14 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { FaArrowLeft } from "react-icons/fa";
-import { BsCalendarDate, BsCalendarDateFill, BsClockFill, BsGeoAltFill, BsPerson } from "react-icons/bs";
+import { BsCalendarDateFill, BsClockFill, BsGeoAltFill } from "react-icons/bs";
 import { IoPersonSharp } from "react-icons/io5";
 
 type Props = {
   params: { id: string }
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export function generateMetadata({ }: Props): Metadata {
   // This would typically fetch data based on the ID
   return {
     title: `Detail Kegiatan - Himpunan Mahasiswa Elektro UNSRAT`,

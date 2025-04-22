@@ -4,6 +4,8 @@ Ini adalah Repository Front-End Website Sistem Informasi HME FT Unsrat menggunak
 1. Download nodejs -> https://nodejs.org/en/download
 
 2. Buka Command Prompt dan cek apakah nodejs sudah terinstall atau belum
+> [!CAUTION]
+> Jika node sudah tersedia seperti gambar dibawah, tidak perlu download lagi!
 ![image](https://github.com/user-attachments/assets/59f6a696-b949-4c6c-99e9-807369707cde)
 ```bash
 node -v

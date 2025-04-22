@@ -4,7 +4,7 @@ import { FaTiktok, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-blue-800 text-white">
+    <footer className="bg-[#0a0057] text-white py-3">
       <div className="container mx-auto px-4 -py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo and Info */}

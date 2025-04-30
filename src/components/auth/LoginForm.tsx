@@ -1,13 +1,15 @@
 "use client"
 
-import type React from "react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa"
 import PasswordInput from "@/components/auth/PasswordInput"
 import InfoAlert from "@/components/auth/InfoAlert"
+import { api } from "@/app/service/api"
 
 export default function LoginForm() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -22,17 +24,37 @@ export default function LoginForm() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Login attempt with:", formData)
-    // Here you would typically handle authentication
+    try {
+      const response = await api.post("/auth/login", {
+        username: formData.username,
+        password: formData.password,
+      })
+
+      const { access_token } = response.data
+
+      // Set token di cookie
+      if (formData.rememberMe) {
+        // kalau "ingat saya" aktif, buat cookie lebih lama
+        document.cookie = `access_token=${access_token}; path=/; max-age=${7 * 24 * 60 * 60};`
+      } else {
+        // kalau tidak, cookie sesi biasa
+        document.cookie = `access_token=${access_token}; path=/;`
+      }
+
+      router.push("/admin/dashboard")
+    } catch (error: unknown) {
+      console.error("Login error:", error)
+      alert("Login gagal. Periksa username dan password.")
+    }
   }
 
   return (
     <div className="p-6">
       <InfoAlert message="Gunakan kredensial yang diberikan oleh administrator sistem." />
-
       <form onSubmit={handleSubmit}>
+        {/* Username */}
         <div className="mb-4">
           <label htmlFor="username" className="block text-gray-700 mb-2">
             Username
@@ -54,6 +76,7 @@ export default function LoginForm() {
           </div>
         </div>
 
+        {/* Password */}
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700 mb-2">
             Password
@@ -68,6 +91,7 @@ export default function LoginForm() {
           />
         </div>
 
+        {/* Ingat Saya dan Lupa Password */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <input
@@ -87,6 +111,7 @@ export default function LoginForm() {
           </Link>
         </div>
 
+        {/* Tombol Login */}
         <button
           type="submit"
           className="w-full bg-blue-700 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-md transition-colors flex items-center justify-center"
@@ -103,24 +128,6 @@ export default function LoginForm() {
           </svg>
         </button>
       </form>
-
-      <div className="mt-6 text-center text-sm text-gray-500 flex items-center justify-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 mr-1"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-          />
-        </svg>
-        Sistem ini dilindungi dan hanya untuk pengurus HME
-      </div>
     </div>
   )
 }

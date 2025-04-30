@@ -1,4 +1,4 @@
-"use client"
+
 
 import AuthLayout from "@/components/auth/AuthLayout"
 import AuthHeader from "@/components/auth/AuthHeader"

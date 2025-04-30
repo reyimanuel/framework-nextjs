@@ -1,4 +1,4 @@
-"use client"
+
 
 import { FaChevronCircleRight } from "react-icons/fa"
 import { FaCircleChevronLeft } from "react-icons/fa6"

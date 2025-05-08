@@ -20,7 +20,11 @@ git clone https://github.com/reyimanuel/framework-dump.git
 
 3. Masuk ke directory project yang sudah di-clone
 ```bash
-cd framework-dump
+cd nama_repository
+```
+yang dimana nama repository ini adalah framework-nextjs
+```bash
+cd framework-nextjs
 ```
 
 4. Install depedencies agar project bisa berjalan

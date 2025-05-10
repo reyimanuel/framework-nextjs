@@ -1,10 +1,10 @@
-import HeroShared from "@/components/shared/HeroShared"
-import AboutSection from "@/components/profil/AboutSection"
-import VisionMissionSection from "@/components/profil/VisionMissionSection"
-import ValuesSection from "@/components/profil/ValuesSection"
-import ChairpersonHistorySection from "@/components/profil/ChairpersonHistorySection"
-import OrganizationStructureSection from "@/components/profil/OrganizationStructureSection"
-import FaqSection from "@/components/profil/FaqSection"
+import HeroShared from "@/shared/HeroShared"
+import AboutSection from "@/app/profil/components/AboutSection"
+import VisionMissionSection from "@/app/profil/components/VisionMissionSection"
+import ValuesSection from "@/app/profil/components/ValuesSection"
+import ChairpersonHistorySection from "@/app/profil/components/ChairpersonHistorySection"
+import OrganizationStructureSection from "@/app/profil/components/OrganizationStructureSection"
+import FaqSection from "@/app/profil/components/FaqSection"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-import type { Album } from "@/components/types/album"
+import type { Album } from "@/types/album"
 
 export const albumsData: Record<string, Album> = {
   lomba: {

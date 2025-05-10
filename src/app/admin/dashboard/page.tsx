@@ -1,12 +1,9 @@
-// src/app/admin/dashboard/page.tsx
-;
-
 import React from "react";
-import DashboardLayout from "@/components/admin/dashboard/Layout";
-import StatCard from "@/components/admin/dashboard/StatCard";
-import ActivityTable from "@/components/admin/dashboard/ActivityTable";
-import MembersList from "@/components/admin/dashboard/MemberList";
-import GalleryPreview from "@/components/admin/dashboard/GalleryPreview";
+import DashboardLayout from "@/app/admin/dashboard/components/Layout";
+import StatCard from "@/app/admin/dashboard/components/StatCard";
+import ActivityTable from "@/app/admin/dashboard/components/ActivityTable";
+import MembersList from "@/app/admin/dashboard/components/MemberList";
+import GalleryPreview from "@/app/admin/dashboard/components/GalleryPreview";
 import { MdPeople, MdEvent, MdPhoto } from "react-icons/md";
 
 export default function DashboardPage() {

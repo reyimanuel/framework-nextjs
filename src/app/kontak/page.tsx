@@ -1,7 +1,7 @@
-import HeroShared from "@/components/shared/HeroShared"
-import ContactInfo from "@/components/kontak/ContactInfo"
-import ContactForm from "@/components/kontak/ContactForm"
-import LocationMap from "@/components/kontak/LocationMap"
+import HeroShared from "@/shared/HeroShared"
+import ContactInfo from "@/app/kontak/components/ContactInfo"
+import ContactForm from "@/app/kontak/components/ContactForm"
+import LocationMap from "@/app/kontak/components/LocationMap"
 import type { Metadata } from "next"
 
 

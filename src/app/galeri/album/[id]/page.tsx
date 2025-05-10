@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import { getAlbumById } from "@/components/data/albums"
-import AlbumDetailPage from "@/components/galeri/AlbumDetailPage"
+import { getAlbumById } from "@/data/albums"
+import AlbumDetailPage from "@/app/galeri/components/AlbumDetailPage"
 
 type Props = {
   params: { id: string }

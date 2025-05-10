@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import SubkegiatanPage from "@/components/kegiatan/SubEvent"
-import { competitionEvents } from "@/components/data/events"
+import SubkegiatanPage from "@/app/kegiatan/components/SubEvent"
+import { competitionEvents } from "@/data/events"
 
 export const metadata: Metadata = {
   title: "Kompetisi - Himpunan Mahasiswa Elektro UNSRAT",

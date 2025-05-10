@@ -4,8 +4,8 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { FaUser } from "react-icons/fa"
-import PasswordInput from "@/components/auth/PasswordInput"
-import InfoAlert from "@/components/auth/InfoAlert"
+import PasswordInput from "@/shared/auth/PasswordInput"
+import InfoAlert from "@/app/admin/auth/components/InfoAlert"
 import { api } from "@/app/service/api"
 
 export default function LoginForm() {

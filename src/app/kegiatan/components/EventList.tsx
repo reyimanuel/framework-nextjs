@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import type { Event } from "@/components/types/event"
+import type { Event } from "@/types/event"
 
 type EventListProps = {
   events: Event[]

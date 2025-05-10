@@ -1,9 +1,9 @@
-import PageHero from "@/components/shared/HeroShared"
-import EventList from "@/components/kegiatan/EventList"
-import EventFilter from "@/components/kegiatan/EventFilter"
-import EventPagination from "@/components/shared/Pagination"
-import Breadcrumb from "@/components/shared/Breadcrumb"
-import type { Event } from "@/components/types/event"
+import PageHero from "@/shared/HeroShared"
+import EventList from "@/app/kegiatan/components/EventList"
+import EventFilter from "@/app/kegiatan/components/EventFilter"
+import EventPagination from "@/shared/Pagination"
+import Breadcrumb from "@/shared/Breadcrumb"
+import type { Event } from "@/types/event"
 
 type SubeventProps = {
   title: string

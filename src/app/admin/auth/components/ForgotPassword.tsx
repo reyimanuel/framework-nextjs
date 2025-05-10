@@ -5,7 +5,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
-import InfoAlert from "@/components/auth/InfoAlert"
+import InfoAlert from "@/app/admin/auth/components/InfoAlert"
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("")

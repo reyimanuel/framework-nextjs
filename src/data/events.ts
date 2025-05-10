@@ -1,4 +1,4 @@
-import type { Event } from "@/components/types/event"
+import type { Event } from "@/types/event"
 
 // Academic Events
 export const academicEvents: Event[] = [

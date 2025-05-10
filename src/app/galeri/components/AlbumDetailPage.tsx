@@ -1,7 +1,7 @@
 import Image from "next/image"
-import Breadcrumb from "@/components/shared/Breadcrumb"
-import type { Album } from "@/components/types/album"
-import EventPagination from "@/components/shared/Pagination"
+import Breadcrumb from "@/shared/Breadcrumb"
+import type { Album } from "@/types/album"
+import EventPagination from "@/shared/Pagination"
 
 type AlbumDetailPageProps = {
   album: Album

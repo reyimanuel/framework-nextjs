@@ -1,6 +1,6 @@
-import HeroShared from "@/components/shared/HeroShared"
-import PhotoAlbumsSection from "@/components/galeri/PhotoAlbumsSection"
-import FeaturedPhotosSection from "@/components/galeri/FeaturedPhotoSection"
+import HeroShared from "@/shared/HeroShared"
+import PhotoAlbumsSection from "@/app/galeri/components/PhotoAlbumsSection"
+import FeaturedPhotosSection from "@/app/galeri/components/FeaturedPhotoSection"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {

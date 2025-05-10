@@ -1,9 +1,9 @@
-import HeroSection from "@/components/HeroSection"
-import AnnouncementSection from "@/components/AnnouncementSection"
-import AboutSection from "@/components/AboutSection"
-import FeaturesSection from "@/components/FeaturesSection"
-import EventsSection from "@/components/EventsSection"
-import ContactSection from "@/components/ContactSection"
+import HeroSection from "@/shared/HeroSection"
+import AnnouncementSection from "@/shared/AnnouncementSection"
+import AboutSection from "@/shared/AboutSection"
+import FeaturesSection from "@/shared/FeaturesSection"
+import EventsSection from "@/shared/EventsSection"
+import ContactSection from "@/shared/ContactSection"
 
 export default function Home() {
   return (

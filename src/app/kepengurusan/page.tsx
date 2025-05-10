@@ -1,9 +1,9 @@
-import HeroShared from "@/components/shared/HeroShared"
-import OrganizationStructureSection from "@/components/kepengurusan/OrganizationStructureSection"
-import CoreTeamSection from "@/components/kepengurusan/CoreTeamSection"
-import DepartmentsSection from "@/components/kepengurusan/DepartmentsSection"
-import WorkProgramsSection from "@/components/kepengurusan/WorkProgramsSection"
-import GallerySection from "@/components/kepengurusan/GallerySection"
+import HeroShared from "@/shared/HeroShared"
+import OrganizationStructureSection from "@/app/kepengurusan/components/OrganizationStructureSection"
+import CoreTeamSection from "@/app/kepengurusan/components/CoreTeamSection"
+import DepartmentsSection from "@/app/kepengurusan/components/DepartmentsSection"
+import WorkProgramsSection from "@/app/kepengurusan/components/WorkProgramsSection"
+import GallerySection from "@/app/kepengurusan/components/GallerySection"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {

@@ -108,7 +108,6 @@ export default function ContactForm() {
             </select>
           </div>
         </div>
-
         <div className="mb-6">
           <textarea
             name="message"
@@ -131,13 +130,6 @@ export default function ContactForm() {
               className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
               required
             />
-            <span className="ml-2 text-sm text-gray-700">
-              Saya menyetujui{" "}
-              <a href="#" className="text-blue-600 hover:underline">
-                kebijakan privasi
-              </a>{" "}
-              HME UNSRAT
-            </span>
           </label>
         </div>
 

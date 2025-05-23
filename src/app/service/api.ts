@@ -26,3 +26,32 @@ api.interceptors.request.use(
 );
 
 export default api;
+
+export const createMember = async (data: {
+  name: string
+  role: string
+  division: string
+  year: string
+  status: string
+}) => {
+  return await api.post("/team/create", data)
+}
+
+export const fetchAllMembers = async () => {
+  const res = await api.get("/team/all");
+  return res.data.data;
+};
+
+export const updateMember = async (id: number, data: {
+  name: string
+  role: string
+  division: string
+  year: string
+  status: string
+}) => {
+  return await api.patch(`/team/update/${id}`, data)
+}
+
+export const deleteMember = async (id: number) => {
+  return await api.delete(`/team/delete/${id}`)
+}

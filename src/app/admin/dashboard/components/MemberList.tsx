@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react"
-import Image from "next/image"
 import { MdMoreVert } from "react-icons/md"
 
 export default function MembersList() {
@@ -11,37 +10,31 @@ export default function MembersList() {
       id: 1,
       name: "Neoville Tajujung",
       role: "Ketua HME",
-      avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 2,
       name: "Julio Roring",
       role: "Wakil Ketua",
-      avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 3,
       name: "Sydney Pesiwarissa",
       role: "Sekretaris",
-      avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 4,
       name: "Diendels Saryono",
       role: "Wakil Sekretaris",
-      avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 5,
       name: "Micha Wungow",
       role: "Bendahara",
-      avatar: "/placeholder.svg?height=40&width=40",
     },
     {
       id: 6,
       name: "Yuan Mantiri",
       role: "Wakil Bendahara",
-      avatar: "/placeholder.svg?height=40&width=40",
     },
   ]
 
@@ -57,7 +50,7 @@ export default function MembersList() {
     <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
         <h2 className="text-lg font-medium">Pengurus</h2>
-        <a href="#" className="text-blue-400 hover:text-blue-300 text-sm transition-colors">
+        <a href="/pengurus" className="text-blue-400 hover:text-blue-300 text-sm transition-colors">
           Lihat Semua
         </a>
       </div>
@@ -65,15 +58,6 @@ export default function MembersList() {
         {members.map((member) => (
           <div key={member.id} className="p-4 hover:bg-gray-700/50 transition-colors">
             <div className="flex items-center">
-              <div className="flex-shrink-0 mr-3">
-                <Image
-                  src={member.avatar || "/placeholder.svg"}
-                  alt={member.name}
-                  width={40}
-                  height={40}
-                  className="rounded-full border-2 border-gray-600"
-                />
-              </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white truncate">{member.name}</p>
                 <p className="text-xs text-gray-400 truncate">{member.role}</p>

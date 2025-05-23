@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { FaUser } from "react-icons/fa"
-import PasswordInput from "@/shared/auth/PasswordInput"
+import PasswordInput from "@/app/admin/auth/components/PasswordInput"
 import InfoAlert from "@/app/admin/auth/components/InfoAlert"
 import { api } from "@/app/service/api"
 
@@ -32,18 +32,17 @@ export default function LoginForm() {
         password: formData.password,
       })
 
-      const { access_token } = response.data
+      const { access_token } = response.data.data
 
-      // Set token di cookie
-      if (formData.rememberMe) {
-        // kalau "ingat saya" aktif, buat cookie lebih lama
-        document.cookie = `access_token=${access_token}; path=/; max-age=${7 * 24 * 60 * 60};`
-      } else {
-        // kalau tidak, cookie sesi biasa
+      if (response.status == 200) {
         document.cookie = `access_token=${access_token}; path=/;`
+        setTimeout(() => {
+          router.push("/admin/dashboard")
+        }, 100)
       }
-
-      router.push("/admin/dashboard")
+      else {
+        alert("Login gagal. Periksa username dan password.")
+      }
     } catch (error: unknown) {
       console.error("Login error:", error)
       alert("Login gagal. Periksa username dan password.")

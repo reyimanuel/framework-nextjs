@@ -2,7 +2,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { MdDashboard, MdPeople, MdEvent, MdPhoto, MdLogout, MdKeyboardArrowLeft, MdSettings, MdHelp } from "react-icons/md"
+import { MdDashboard, MdPeople, MdEvent, MdPhoto, MdKeyboardArrowLeft, MdSettings, MdHelp } from "react-icons/md"
 import { useSidebar } from "@/app/admin/dashboard/components/SidebarContext"
 
 export default function Sidebar() {
@@ -79,10 +79,6 @@ export default function Sidebar() {
           </nav>
 
           <div className="p-4">
-            <div className={`${!collapsed ? "block" : "hidden"} mb-4 px-4 py-3 bg-blue-900/30 rounded-lg`}>
-              <p className="text-xs text-gray-400">Logged in as</p>
-              <p className="font-medium">Administrator</p>
-            </div>
             <Link
               href="/admin/help"
               className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800/50 hover:text-white rounded-lg text-sm transition-colors mb-2"
@@ -90,10 +86,6 @@ export default function Sidebar() {
               <MdHelp className={`${collapsed ? "mr-0" : "mr-3"} h-5 w-5`} />
               {!collapsed && <span>Help & Support</span>}
             </Link>
-            <button className="flex items-center px-4 py-3 w-full text-gray-300 hover:bg-red-900/50 hover:text-white rounded-lg text-sm transition-colors">
-              <MdLogout className={`${collapsed ? "mr-0" : "mr-3"} h-5 w-5`} />
-              {!collapsed && <span>Logout</span>}
-            </button>
           </div>
         </div>
       </div>

@@ -1,60 +1,57 @@
-import { fetchAllMembers } from "@/app/service/api"
-import { useEffect, useState, useMemo } from "react"
+"use client"
+
+import { useEffect, useState } from "react"
 import { MdPeople } from "react-icons/md"
+import { fetchAllMembers } from "@/app/service/api"
+import type { Member, Division } from "./types/member"
 
-export interface Member {
-  id: number
-  name: string
-  role: string
-  division: string
-  year: string
-  status: "Active" | "Inactive" | "Alumni"
+const DIVISION_COLORS: Record<string, string> = {
+  "Non Bidang": "from-blue-900 to-blue-700",
+  "Keilmuwan & Penalaran": "from-green-900 to-green-700",
+  "Minat & Bakat": "from-purple-900 to-purple-700",
+  "Kesejahteraan Mahasiswa": "from-red-900 to-red-700",
+  "Umum & Sarana Prasarana": "from-yellow-900 to-yellow-700",
+  "Bursa & Pendanaan": "from-gray-900 to-gray-700",
+  "Kerohanian": "from-pink-900 to-pink-700",
+  "Humas & Kemitraan": "from-orange-900 to-orange-700",
 }
 
-interface Division {
-  name: string
-  count: number
-  color: string
-}
+const DEFAULT_COLOR = "from-gray-900 to-gray-700"
 
 export default function DivisionStats() {
   const [stats, setStats] = useState<Division[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const colorMap = useMemo<Record<string, string>>(() => ({
-    "Non Bidang": "from-blue-900 to-blue-700",
-    "Keilmuwan & Penalaran": "from-green-900 to-green-700",
-    "Minat & Bakat": "from-purple-900 to-purple-700",
-    "Kesejahteraan Mahasiswa": "from-red-900 to-red-700",
-    "Umum & Sarana Prasarana": "from-yellow-900 to-yellow-700",
-    "Bursa & Pendanaan": "from-gray-900 to-gray-700",
-    "Kerohanian": "from-pink-900 to-pink-700",
-    "Humas & Kemitraan": "from-orange-900 to-orange-700",
-  }), [])
+
+  const calculateDivisionStats = (members: Member[]): Division[] => {
+    if (!members || !Array.isArray(members)) return []
+
+    const countMap: Record<string, number> = {}
+
+    // Count active members by division
+    members
+      .filter(member => member.status === "Active")
+      .forEach(member => {
+        countMap[member.division] = (countMap[member.division] || 0) + 1
+      })
+
+    // Convert to Division array
+    return Object.entries(countMap).map(([division, count]) => ({
+      name: division,
+      count,
+      color: DIVISION_COLORS[division] || DEFAULT_COLOR,
+    }))
+  }
 
   useEffect(() => {
     const loadStats = async () => {
       setLoading(true)
       setError(null)
+
       try {
-        const data: Member[] = await fetchAllMembers()
-
-        // Hitung jumlah per divisi dengan status "Active"
-        const countMap: Record<string, number> = {}
-        for (const member of data) {
-          if (member.status === "Active") {
-            countMap[member.division] = (countMap[member.division] || 0) + 1
-          }
-        }
-
-        // Ubah ke bentuk array yang siap ditampilkan
-        const result: Division[] = Object.entries(countMap).map(([division, count]) => ({
-          name: division,
-          count,
-          color: colorMap[division] || "from-gray-900 to-gray-700"
-        }))
-
-        setStats(result)
+        const members = await fetchAllMembers()
+        const divisionStats = calculateDivisionStats(members)
+        setStats(divisionStats)
       } catch (err) {
         console.error("Gagal menghitung statistik divisi:", err)
         setError("Gagal memuat data. Silakan coba lagi.")
@@ -64,7 +61,7 @@ export default function DivisionStats() {
     }
 
     loadStats()
-  }, [colorMap])
+  }, [])
 
   if (loading) {
     return (
@@ -76,12 +73,19 @@ export default function DivisionStats() {
 
   if (error) {
     return (
-      <div className="text-center py-8 text-red-400">
+      <div className="text-center py-8 text-gray-300">
         {error}
       </div>
     )
   }
 
+  if (!stats.length) {
+    return (
+      <div className="text-center py-8 text-gray-300">
+        Tidak ada data anggota aktif yang ditemukan.
+      </div>
+    )
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">

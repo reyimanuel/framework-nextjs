@@ -1,65 +1,28 @@
 "use client"
 import { useState } from "react"
 import DashboardLayout from "@/app/admin/dashboard/components/Layout"
-import ActivityTable from "@/app/admin/kegiatan/components/ActivityTable"
-import ActivityStats from "@/app/admin/kegiatan/components/ActivityStats"
-import UpcomingActivities from "@/app/admin/kegiatan/components/UpcomingActivities"
-import AddActivityForm from "@/app/admin/kegiatan/components/AddActivityForm"
+import EventTable from "@/app/admin/kegiatan/components/EventTable"
+import EventStats from "@/app/admin/kegiatan/components/StatusStats"
+import AddEventForm from "@/app/admin/kegiatan/components/AddEventForm"
 import { MdAdd } from "react-icons/md"
 
-export interface ActivityFormData {
-    name: string
-    date: string
-    category: string
-    location: string
-    description: string
-    status: string
+export interface EventFormData {
+  name: string
+  date: string
+  category: string
+  location: string
+  description: string
+  status: string
 }
 
 export default function KegiatanPage() {
-  const [isAddActivityOpen, setIsAddActivityOpen] = useState(false)
+  const [isAddEventOpen, setIsAddEventOpen] = useState(false)
+  const [refreshTrigger, setRefreshTrigger] = useState(false)
 
-  // Sample activity statistics
-  const activityStats = {
-    total: 8,
-    upcoming: 3,
-    completed: 2,
-    participants: 290,
+  const handleRefresh = () => {
+    setRefreshTrigger((prev) => !prev)
   }
 
-  // Sample upcoming activities
-  const upcomingActivities = [
-    {
-      id: 1,
-      name: "Tranformasi Mahasiswa Fakultas Teknik UNSRAT Menuju Indonesia Emas 2045",
-      date: "22 Apr 2025",
-      location: "Aula Fakultas Teknik",
-      category: "Talkshow",
-      participants: 120,
-    },
-    {
-      id: 2,
-      name: "Sharing Internship & Expo Beasiswa",
-      date: "15 Mar 2025",
-      location: "Zoom Meeting",
-      category: "Webinar",
-      participants: 85,
-    },
-    {
-      id: 7,
-      name: "Seminar Teknologi Blockchain",
-      date: "12 Sep 2024",
-      location: "Aula Fakultas Teknik",
-      category: "Seminar",
-      participants: 0,
-    },
-  ]
-
-  const handleAddActivity = (data: ActivityFormData) => {
-    console.log("Adding new activity:", data)
-    // Here you would typically send this data to your API
-    // and then refresh the activity list
-  }
 
   return (
     <DashboardLayout>
@@ -70,30 +33,31 @@ export default function KegiatanPage() {
             <p className="text-gray-400">Kelola kegiatan dan acara HME UNSRAT</p>
           </div>
           <button
-            onClick={() => setIsAddActivityOpen(true)}
+            onClick={() => setIsAddEventOpen(true)}
             className="mt-4 sm:mt-0 flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
           >
             <MdAdd className="mr-1" /> Tambah Kegiatan
           </button>
         </div>
 
-        <ActivityStats stats={activityStats} />
+        <EventStats />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="mb-8">
         <div className="lg:col-span-2">
-          <ActivityTable />
-        </div>
-        <div className="lg:col-span-1">
-          <UpcomingActivities activities={upcomingActivities} />
+          <EventTable refreshTrigger={refreshTrigger} onRefresh={handleRefresh} />
         </div>
       </div>
 
-      <AddActivityForm
-        isOpen={isAddActivityOpen}
-        onClose={() => setIsAddActivityOpen(false)}
-        onSubmit={handleAddActivity}
+      <AddEventForm
+        isOpen={isAddEventOpen}
+        onClose={() => setIsAddEventOpen(false)}
+        onSuccess={() => {
+          setIsAddEventOpen(false);
+          handleRefresh();
+        }}
       />
+
     </DashboardLayout>
   )
 }

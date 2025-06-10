@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { MdMenu, MdNotifications, MdSearch, MdKeyboardArrowDown } from "react-icons/md"
+import { MdMenu, MdKeyboardArrowDown } from "react-icons/md"
 import Image from "next/image"
 import { useSidebar } from "@/app/admin/dashboard/components/SidebarContext"
 
@@ -25,20 +25,7 @@ export default function Header() {
           </h1>
         </div>
 
-        <div className="hidden md:flex items-center bg-gray-700/50 rounded-lg px-3 py-1.5 flex-1 max-w-md mx-4">
-          <MdSearch className="h-5 w-5 text-gray-400 mr-2" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent border-none focus:outline-none text-gray-200 placeholder-gray-400 w-full"
-          />
-        </div>
-
         <div className="flex items-center space-x-4">
-          <button className="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition-colors relative">
-            <MdNotifications className="h-6 w-6" />
-            <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-          </button>
 
           <div className="relative">
             <button

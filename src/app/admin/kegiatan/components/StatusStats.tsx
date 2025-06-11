@@ -5,8 +5,6 @@ import { MdEvent, MdCheckCircle, MdAccessTime, MdCancel } from "react-icons/md"
 import { fetchAllEvents } from '@/app/service/api';
 import type { Status, Stats } from '@/app/admin/kegiatan/components/types/event';
 
-
-
 export default function StatusStats() {
   // Berikan tipe `Stats` pada state
   const [stats, setStats] = useState<Stats>({

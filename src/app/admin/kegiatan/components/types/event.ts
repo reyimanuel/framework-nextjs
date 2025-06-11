@@ -49,8 +49,3 @@ export interface ViewEventModalProps {
     onEdit: (event: Event) => void
 }
 
-// Tipe permintaan tambah/edit kegiatan, tanpa id
-export type MemberRequest = Omit<Event, "id">
-
-// Tambahan jika kamu butuh versi partial (misal untuk form validasi opsional)
-export type PartialMember = Partial<Event>

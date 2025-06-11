@@ -7,7 +7,6 @@ import type { Event, EventTableProps } from "@/app/admin/kegiatan/components/typ
 import EditEventForm from "@/app/admin/kegiatan/components/EditEventForm";
 import ViewEventModal from "@/app/admin/kegiatan/components/ViewEventModal";
 
-
 export default function EventTable({ refreshTrigger, onRefresh }: EventTableProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +25,7 @@ export default function EventTable({ refreshTrigger, onRefresh }: EventTableProp
       setLoading(true);
       try {
         const data = await fetchAllEvents();
-        setEvents(data);
+        setEvents(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching events:", error);
       } finally {

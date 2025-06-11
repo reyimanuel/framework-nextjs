@@ -77,7 +77,7 @@ export const deleteEvent = async (id: number) => {
 };
 
 // gallery
-export const createGallery = async (data: { name: string; description: string; imageUrl: string }) => {
+export const createGallery = async (data: FormData) => {
   return await api.post("/gallery/create", data);
 };
 
@@ -86,14 +86,7 @@ export const fetchAllGalleries = async () => {
   return res.data.data;
 };
 
-export const updateGallery = async (
-  id: number,
-  data: {
-    name: string;
-    description: string;
-    imageUrl: string;
-  }
-) => {
+export const updateGallery = async (id: number, data: FormData) => {
   return await api.patch(`/gallery/update/${id}`, data);
 };
 

@@ -77,7 +77,7 @@ export default function ViewEventModal({ event, onClose, onEdit }: ViewEventModa
                             <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden border border-gray-700 bg-gray-700">
                                 {event.event_image_url ? (
                                     <Image
-                                        src={event.event_image_url || "/placeholder.svg"}
+                                        src={event.event_image_url}
                                         alt={event.event_name}
                                         width={400}
                                         height={300}

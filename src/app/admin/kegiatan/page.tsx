@@ -6,15 +6,6 @@ import EventStats from "@/app/admin/kegiatan/components/StatusStats"
 import AddEventForm from "@/app/admin/kegiatan/components/AddEventForm"
 import { MdAdd } from "react-icons/md"
 
-export interface EventFormData {
-  name: string
-  date: string
-  category: string
-  location: string
-  description: string
-  status: string
-}
-
 export default function KegiatanPage() {
   const [isAddEventOpen, setIsAddEventOpen] = useState(false)
   const [refreshTrigger, setRefreshTrigger] = useState(false)
@@ -22,7 +13,6 @@ export default function KegiatanPage() {
   const handleRefresh = () => {
     setRefreshTrigger((prev) => !prev)
   }
-
 
   return (
     <DashboardLayout>

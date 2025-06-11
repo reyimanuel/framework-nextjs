@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { MdSearch, MdFilterList, MdCalendarToday, MdVisibility, MdEdit, MdDelete } from "react-icons/md";
-import { fetchAllEvents } from "@/app/service/api";
+import { fetchAllEvents, deleteEvent } from "@/app/service/api";
 import type { Event, EventTableProps } from "@/app/admin/kegiatan/components/types/event";
 import EditEventForm from "@/app/admin/kegiatan/components/EditEventForm";
+import ViewEventModal from "@/app/admin/kegiatan/components/ViewEventModal";
+
 
 export default function EventTable({ refreshTrigger, onRefresh }: EventTableProps) {
   const [events, setEvents] = useState<Event[]>([]);
@@ -14,6 +16,8 @@ export default function EventTable({ refreshTrigger, onRefresh }: EventTableProp
   const [editEvent, setEditEvent] = useState<Event | null>(null);
   const [eventToDelete, setEventToDelete] = useState<number | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [viewEvent, setViewEvent] = useState<Event | null>(null);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const filterOptions = ["All", "Talkshow", "Webinar", "Study Club", "Tournament", "Workshop", "Seminar"];
 
@@ -66,15 +70,36 @@ export default function EventTable({ refreshTrigger, onRefresh }: EventTableProp
     setIsDeleteModalOpen(true);
   };
 
-  const confirmDeleteEvent = () => {
-    console.log("Deleting event:", eventToDelete);
-    // TODO: Implement delete logic here
-    setIsDeleteModalOpen(false);
-    setEventToDelete(null);
-  };
-
   const handleEditSubmit = () => {
     onRefresh();
+  };
+
+  const handleViewEvent = (event: Event) => {
+    setViewEvent(event)
+  }
+
+  // Di dalam komponen EventTable
+
+  const confirmDeleteEvent = async () => {
+    if (!eventToDelete) return;
+
+    setIsDeleting(true);
+
+    try {
+      await deleteEvent(eventToDelete);
+
+      alert("Kegiatan berhasil dihapus!");
+
+      onRefresh();
+
+    } catch (error) {
+      console.error("Gagal menghapus event:", error);
+      alert("Gagal menghapus kegiatan. Silakan coba lagi.");
+    } finally {
+      setIsDeleteModalOpen(false);
+      setEventToDelete(null);
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -152,7 +177,7 @@ export default function EventTable({ refreshTrigger, onRefresh }: EventTableProp
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                       <div className="flex space-x-3">
-                        <button onClick={() => console.log("View", event)} className="text-gray-400 hover:text-blue-400 transition-colors">
+                        <button onClick={() => handleViewEvent(event)} className="text-gray-400 hover:text-blue-400 transition-colors">
                           <MdVisibility className="h-5 w-5" />
                         </button>
                         <button onClick={() => handleEditEvent(event)} className="text-gray-400 hover:text-yellow-400 transition-colors">
@@ -185,6 +210,8 @@ export default function EventTable({ refreshTrigger, onRefresh }: EventTableProp
         </div>
       </div>
 
+      <ViewEventModal event={viewEvent} onClose={() => setViewEvent(null)} onEdit={handleEditEvent} />
+
       <EditEventForm
         event={editEvent}
         isOpen={editEvent !== null}
@@ -201,7 +228,8 @@ export default function EventTable({ refreshTrigger, onRefresh }: EventTableProp
             </p>
             <div className="flex justify-end space-x-3">
               <button
-                onClick={() => setIsDeleteModalOpen(false)}
+                onClick={confirmDeleteEvent}
+                disabled={isDeleting}
                 className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
               >
                 Batal
@@ -210,7 +238,7 @@ export default function EventTable({ refreshTrigger, onRefresh }: EventTableProp
                 onClick={confirmDeleteEvent}
                 className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
               >
-                Hapus
+                {isDeleting ? "Menghapus..." : "Hapus"}
               </button>
             </div>
           </div>

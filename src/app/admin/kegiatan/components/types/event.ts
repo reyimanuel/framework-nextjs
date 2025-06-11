@@ -43,6 +43,12 @@ export interface EventTableProps {
     onRefresh: () => void;
 }
 
+export interface ViewEventModalProps {
+    event: Event | null
+    onClose: () => void
+    onEdit: (event: Event) => void
+}
+
 // Tipe permintaan tambah/edit kegiatan, tanpa id
 export type MemberRequest = Omit<Event, "id">
 

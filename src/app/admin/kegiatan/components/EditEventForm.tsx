@@ -25,7 +25,7 @@ export default function EditEventForm({ event, isOpen, onClose, onSuccess }: Edi
             setFormData({
                 event_name: event.event_name,
                 event_date: formattedDate,
-                event_time: event.event_time,
+                event_time: event.event_time.substring(0, 5),
                 event_location: event.event_location,
                 event_description: event.event_description,
                 event_organizer: event.event_organizer,

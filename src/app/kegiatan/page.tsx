@@ -5,7 +5,7 @@ import AcademicEventsSection from "@/app/kegiatan/components/AcademicEventsSecti
 import CompetitionEventsSection from "@/app/kegiatan/components/CompetitionEventsSection"
 import CommunityServiceSection from "@/app/kegiatan/components/CommunityServiceSection"
 import OrganizationalEventsSection from "@/app/kegiatan/components/OrganizationalEventsSection"
-import EventRegistrationSection from "@/app/kegiatan/components/EventRegistrationSection"
+// import EventRegistrationSection from "@/app/kegiatan/components/EventRegistrationSection"
 import FaqSection from "@/app/kegiatan/components/FaqSection"
 import type { Metadata } from "next"
 
@@ -18,8 +18,8 @@ export default function KegiatanPage() {
   return (
     <main>
       <HeroShared
-      title="Kegiatan HME FT UNSRAT" 
-      description="Kegiatan Himpunan Mahasiswa Elektro UNSRAT"
+        title="Kegiatan HME FT UNSRAT"
+        description="Kegiatan Himpunan Mahasiswa Elektro UNSRAT"
       />
       <UpcomingEventsSection />
       <EventCategoriesSection />
@@ -27,7 +27,7 @@ export default function KegiatanPage() {
       <CompetitionEventsSection />
       <CommunityServiceSection />
       <OrganizationalEventsSection />
-      <EventRegistrationSection />
+      {/* <EventRegistrationSection /> */}
       <FaqSection />
     </main>
   )

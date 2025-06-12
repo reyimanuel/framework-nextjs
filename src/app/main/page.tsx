@@ -3,7 +3,7 @@ import AnnouncementSection from "@/shared/AnnouncementSection"
 import AboutSection from "@/shared/AboutSection"
 import FeaturesSection from "@/shared/FeaturesSection"
 import EventsSection from "@/shared/EventsSection"
-import ContactSection from "@/shared/ContactSection"
+// import ContactSection from "@/shared/ContactSection"
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       <AboutSection />
       <FeaturesSection />
       <EventsSection />
-      <ContactSection />
+      {/* <ContactSection /> */}
     </main>
   )
 }

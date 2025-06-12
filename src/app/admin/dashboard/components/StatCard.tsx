@@ -58,12 +58,6 @@ export default function StatCard({ title, icon, bgColor, fetcher }: StatCardProp
           </div>
         </div>
         <div className="mt-4 pt-4 border-t border-white/10">
-          <a href="#" className="text-xs text-white/80 hover:text-white transition-colors flex items-center">
-            View details
-            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </a>
         </div>
       </div>
     </div>

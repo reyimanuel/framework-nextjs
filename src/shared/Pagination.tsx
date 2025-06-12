@@ -1,4 +1,4 @@
-
+"use client"
 
 import { FaChevronCircleRight } from "react-icons/fa"
 import { FaCircleChevronLeft } from "react-icons/fa6"
@@ -44,11 +44,10 @@ export default function EventPagination({ totalPages, currentPage, onPageChange 
               <button
                 onClick={() => handlePageChange(page)}
                 aria-current={currentPage === page ? "page" : undefined}
-                className={`px-3 py-2 leading-tight border border-gray-300 ${
-                  currentPage === page
+                className={`px-3 py-2 leading-tight border border-gray-300 ${currentPage === page
                     ? "text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
                     : "text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700"
-                }`}
+                  }`}
               >
                 {page}
               </button>

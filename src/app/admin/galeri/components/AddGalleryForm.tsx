@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MdClose, MdCloudUpload } from "react-icons/md";
 import { AddGalleryFormProps } from "@/app/admin/galeri/components/types/gallery";
 import { createGallery } from "@/app/service/api";
+import { toast } from "react-hot-toast"
 
 export default function AddGalleryForm({ isOpen, onClose, onSuccess }: AddGalleryFormProps) {
     // 1. State formData disederhanakan, tanpa 'date'. Menggunakan 'name' secara langsung.
@@ -61,12 +62,12 @@ export default function AddGalleryForm({ isOpen, onClose, onSuccess }: AddGaller
         try {
             await createGallery(data);
 
-            alert("Foto berhasil ditambahkan!");
+            toast.success("Foto berhasil ditambahkan!");
             onSuccess();
             handleClose();
         } catch (err) {
             console.error("Gagal membuat galeri:", err);
-            setError("Terjadi kesalahan. Pastikan semua data terisi dengan benar.");
+            toast.error("Terjadi kesalahan. Pastikan semua data terisi dengan benar.");
         } finally {
             setIsSubmitting(false);
         }

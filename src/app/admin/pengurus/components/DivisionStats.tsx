@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react"
 import { MdPeople } from "react-icons/md"
 import { fetchAllMembers } from "@/app/service/api"
-import type { Member, Division } from "./types/member"
+import type { Member, Division, MemberTableProps } from "./types/member"
+import { toast } from "react-hot-toast"
 
 const DIVISION_COLORS: Record<string, string> = {
   "Non Bidang": "from-blue-900 to-blue-700",
@@ -18,7 +19,7 @@ const DIVISION_COLORS: Record<string, string> = {
 
 const DEFAULT_COLOR = "from-gray-900 to-gray-700"
 
-export default function DivisionStats() {
+export default function DivisionStats({ refreshTrigger }: MemberTableProps) {
   const [stats, setStats] = useState<Division[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -54,14 +55,14 @@ export default function DivisionStats() {
         setStats(divisionStats)
       } catch (err) {
         console.error("Gagal menghitung statistik divisi:", err)
-        setError("Gagal memuat data. Silakan coba lagi.")
+        toast.error("Gagal memuat data. Silakan coba lagi.")
       } finally {
         setLoading(false)
       }
     }
 
     loadStats()
-  }, [])
+  }, [refreshTrigger])
 
   if (loading) {
     return (

@@ -1,7 +1,6 @@
 "use client"
 import { useState } from "react"
 import { MdMenu, MdKeyboardArrowDown } from "react-icons/md"
-import Image from "next/image"
 import { useSidebar } from "@/app/admin/dashboard/components/SidebarContext"
 
 export default function Header() {
@@ -32,13 +31,6 @@ export default function Header() {
               className="flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 rounded-full p-1 pr-3 transition-colors"
               onClick={() => setIsProfileOpen(!isProfileOpen)}
             >
-              <Image
-                src="/placeholder.svg?height=32&width=32"
-                alt="Admin"
-                width={32}
-                height={32}
-                className="rounded-full border-2 border-blue-500"
-              />
               <span className="text-sm font-medium hidden sm:block">Admin</span>
               <MdKeyboardArrowDown
                 className={`transition-transform duration-200 ${isProfileOpen ? "rotate-180" : ""}`}
@@ -49,9 +41,6 @@ export default function Header() {
               <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-10 border border-gray-700">
                 <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">
                   Your Profile
-                </a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">
-                  Settings
                 </a>
                 <div className="border-t border-gray-700 my-1"></div>
                 <a href="#" className="block px-4 py-2 text-sm text-red-400 hover:bg-gray-700">

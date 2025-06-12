@@ -30,7 +30,7 @@ export default function GaleriPage() {
                     </button>
                 </div>
 
-                <GalleryStats />
+                <GalleryStats refreshTrigger={refreshTrigger} onRefresh={handleRefresh} />
             </div>
 
             <div className="mb-8">

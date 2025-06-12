@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { MdEvent, MdCheckCircle, MdAccessTime, MdCancel } from "react-icons/md"
 import { fetchAllEvents } from '@/app/service/api';
 import type { Status, Stats } from '@/app/admin/kegiatan/components/types/event';
+import { toast } from "react-hot-toast"
 
 export default function StatusStats() {
   // Berikan tipe `Stats` pada state
@@ -38,7 +39,7 @@ export default function StatusStats() {
         }
       } catch (err) {
         console.error('Failed to fetch event stats:', err);
-        setError('Gagal memuat statistik kegiatan.');
+        toast.error('Gagal memuat statistik kegiatan.');
       } finally {
         setLoading(false);
       }

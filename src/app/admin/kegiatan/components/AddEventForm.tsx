@@ -5,9 +5,10 @@ import Image from "next/image";
 import { MdClose, MdCloudUpload } from "react-icons/md";
 import type { AddEventFormProps } from "./types/event";
 import { createEvent } from "@/app/service/api";
+import { toast } from "react-hot-toast"
 
 export default function AddEventForm({ isOpen, onClose, onSuccess }: AddEventFormProps) {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     event_name: "",
     event_date: "",
     event_time: "",
@@ -16,7 +17,9 @@ export default function AddEventForm({ isOpen, onClose, onSuccess }: AddEventFor
     event_organizer: "HME",
     event_status: "Active",
     event_category: "Akademik",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -48,6 +51,14 @@ export default function AddEventForm({ isOpen, onClose, onSuccess }: AddEventFor
     }
   };
 
+  const handleClose = () => {
+    setFormData(initialFormData);
+    setImageFile(null);
+    setImagePreview(null);
+    setError(null);
+    onClose();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -71,12 +82,12 @@ export default function AddEventForm({ isOpen, onClose, onSuccess }: AddEventFor
 
     try {
       await createEvent(data);
-      alert("Kegiatan berhasil ditambahkan!");
+      toast.success("Kegiatan berhasil ditambahkan!");
       onSuccess?.();
-      onClose();
+      handleClose();
     } catch (err) {
       console.error("Gagal menambahkan event:", err);
-      setError("Terjadi kesalahan. Pastikan semua data terisi dengan benar.");
+      toast.error("Terjadi kesalahan. Pastikan semua data terisi dengan benar.");
     } finally {
       setIsSubmitting(false);
     }
@@ -94,7 +105,7 @@ export default function AddEventForm({ isOpen, onClose, onSuccess }: AddEventFor
         <div className="flex items-center justify-between p-4 border-b border-gray-700 sticky top-0 bg-gray-800 z-10">
           <h2 className="text-lg font-medium">Tambah Kegiatan Baru</h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-1 rounded-full hover:bg-gray-700 text-gray-400 hover:text-white transition-colors"
           >
             <MdClose className="h-5 w-5" />
@@ -181,7 +192,7 @@ export default function AddEventForm({ isOpen, onClose, onSuccess }: AddEventFor
           <div className="mt-6 flex justify-end space-x-3">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
             >
               Batal

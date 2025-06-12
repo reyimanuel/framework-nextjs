@@ -2,8 +2,9 @@ import { MdPhoto, MdCategory, MdStorage, MdPhotoAlbum } from "react-icons/md"
 import { useState, useEffect } from "react";
 import { fetchAllGalleries } from "@/app/service/api";
 import { StatsData, GalleryItem } from "@/app/admin/galeri/components/types/gallery";
+import { GalleryGridProps } from "@/app/admin/galeri/components/types/gallery";
 
-export default function GalleryStats() {
+export default function GalleryStats({ refreshTrigger }: GalleryGridProps) {
 
     const [stats, setStats] = useState<StatsData>({
         Akademik: 0,
@@ -46,7 +47,7 @@ export default function GalleryStats() {
         };
 
         getGalleryStats();
-    }, []);
+    }, [refreshTrigger]);
 
     if (loading) {
         return <div className="text-center p-4">Loading statistics...</div>;

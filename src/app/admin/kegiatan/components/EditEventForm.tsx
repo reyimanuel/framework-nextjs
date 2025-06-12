@@ -6,6 +6,7 @@ import { MdClose, MdCloudUpload } from "react-icons/md";
 import type { Event } from "@/app/admin/kegiatan/components/types/event";
 import { updateEvent } from "@/app/service/api";
 import type { EditEventFormProps } from "@/app/admin/kegiatan/components/types/event";
+import { toast } from "react-hot-toast"
 
 type UpdatableEventData = Omit<Event, "id" | "created_at" | "updated_at" | "event_image_url">;
 
@@ -73,12 +74,12 @@ export default function EditEventForm({ event, isOpen, onClose, onSuccess }: Edi
 
         try {
             await updateEvent(event.id, data);
-            alert("Perubahan berhasil disimpan!");
+            toast.success("Perubahan berhasil disimpan!");
             onSuccess();
             onClose();
         } catch (err) {
             console.error("Gagal memperbarui event:", err);
-            setError("Terjadi kesalahan saat menyimpan perubahan.");
+            toast.error("Terjadi kesalahan saat menyimpan perubahan. Pastikan semua data terisi dengan benar.");
         } finally {
             setIsSubmitting(false);
         }

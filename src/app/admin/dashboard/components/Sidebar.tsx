@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { MdDashboard, MdPeople, MdEvent, MdPhoto, MdKeyboardArrowLeft, MdHelp } from "react-icons/md";
+import { MdDashboard, MdPeople, MdEvent, MdPhoto, MdKeyboardArrowLeft } from "react-icons/md";
 import { useSidebar } from "@/app/admin/dashboard/components/SidebarContext";
 
 export default function Sidebar() {
@@ -53,12 +53,6 @@ export default function Sidebar() {
             })}
           </nav>
 
-          <div className="p-4">
-            <Link href="/admin/help" className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800/50 hover:text-white rounded-lg text-sm transition-colors mb-2">
-              <MdHelp className={`${collapsed ? "mr-0" : "mr-3"} h-5 w-5`} />
-              {!collapsed && <span>Help & Support</span>}
-            </Link>
-          </div>
         </div>
       </div>
 

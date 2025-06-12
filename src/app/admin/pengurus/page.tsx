@@ -27,7 +27,7 @@ export default function PengurusPage() {
           </button>
         </div>
 
-        <DivisionStats />
+        <DivisionStats refreshTrigger={refreshTrigger} />
       </div>
 
       <div className="mb-8">

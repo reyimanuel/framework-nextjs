@@ -7,6 +7,7 @@ import { fetchAllGalleries, deleteGallery } from "@/app/service/api";
 import { GalleryItem, GalleryGridProps } from "@/app/admin/galeri/components/types/gallery";
 import ViewGalleryModal from "@/app/admin/galeri/components/ViewGalleryModal";
 import EditGalleryForm from "@/app/admin/galeri/components/EditGalleryForm";
+import { toast } from "react-hot-toast"
 
 export default function GalleryGrid({ refreshTrigger, onRefresh }: GalleryGridProps) {
     const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -25,7 +26,7 @@ export default function GalleryGrid({ refreshTrigger, onRefresh }: GalleryGridPr
             try {
                 setLoading(true);
                 const data: GalleryItem[] = await fetchAllGalleries();
-                setGalleryItems(data);
+                setGalleryItems(Array.isArray(data) ? data : []);
                 setError(null);
             } catch (err) {
                 setError("Gagal memuat galeri. Silakan coba lagi nanti.");
@@ -82,12 +83,12 @@ export default function GalleryGrid({ refreshTrigger, onRefresh }: GalleryGridPr
         try {
             await deleteGallery(galleryToDelete);
 
-            alert("Kegiatan berhasil dihapus!");
+            toast.success("Kegiatan berhasil dihapus!");
 
             onRefresh();
         } catch (error) {
             console.error("Gagal menghapus Gallery:", error);
-            alert("Gagal menghapus kegiatan. Silakan coba lagi.");
+            toast.error("Gagal menghapus kegiatan. Silakan coba lagi.");
         } finally {
             setIsDeleteModalOpen(false);
             setGalleryToDelete(null);
@@ -131,7 +132,7 @@ export default function GalleryGrid({ refreshTrigger, onRefresh }: GalleryGridPr
                             {filteredItems.map((item) => (
                                 <div key={item.id} className="group relative bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300">
                                     <div className="aspect-w-16 aspect-h-9">
-                                        <Image src={item.image_url || "/placeholder.svg"} alt={item.name} width={400} height={300} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
+                                        <Image src={item.image_url} alt={item.name} width={400} height={300} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
                                     </div>
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3">
                                         <div className="self-end flex space-x-1">

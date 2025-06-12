@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { MdEdit, MdDelete, MdFilterList, MdSearch } from "react-icons/md"
-import { deleteMember, fetchAllMembers, updateMember } from "@/app/service/api"
-import EditMemberForm from "@/app/admin/pengurus/components/EditMember"
-import toast from "react-hot-toast"
-import { Member, MemberTableProps } from "@/app/admin/pengurus/components/types/member"
+import { useEffect, useMemo, useState } from "react";
+import { MdEdit, MdDelete, MdSearch, MdArrowUpward, MdArrowDownward } from "react-icons/md";
+import { deleteMember, fetchAllMembers, updateMember } from "@/app/service/api";
+import EditMemberForm from "@/app/admin/pengurus/components/EditMember";
+import toast from "react-hot-toast";
+import { Member, MemberTableProps } from "@/app/admin/pengurus/components/types/member";
 
 export default function MemberTable({ refreshTrigger }: MemberTableProps) {
   const [members, setMembers] = useState<Member[]>([]);
@@ -16,6 +16,9 @@ export default function MemberTable({ refreshTrigger }: MemberTableProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState<number | null>(null);
   const [internalRefreshTrigger, setInternalRefreshTrigger] = useState(0);
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Member; direction: "ascending" | "descending" } | null>({ key: "name", direction: "ascending" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const filterOptions = ["Semua", "Non Bidang", "Keilmuwan & Penalaran", "Minat & Bakat", "Kesejahteraan Mahasiswa", "Umum & Sarana Prasarana", "Bursa & Pendanaan", "Kerohanian", "Humas & Kemitraan"];
 
@@ -50,6 +53,26 @@ export default function MemberTable({ refreshTrigger }: MemberTableProps) {
   };
 
   const filteredMembers = members.filter((member) => (member.name.toLowerCase().includes(searchTerm.toLowerCase()) || member.role.toLowerCase().includes(searchTerm.toLowerCase()) || member.division.toLowerCase().includes(searchTerm.toLowerCase())) && (selectedFilter === "Semua" || member.division === selectedFilter));
+
+  const sortedMembers = useMemo(() => {
+    const sortableItems = [...filteredMembers]; // Salin array agar tidak mengubah state asli
+    if (sortConfig !== null) {
+      sortableItems.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [filteredMembers, sortConfig]);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentTableData = sortedMembers.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleEditMember = (member: Member) => {
     setEditMember(member);
@@ -94,31 +117,97 @@ export default function MemberTable({ refreshTrigger }: MemberTableProps) {
     }
   };
 
+  // Kalkulasi untuk info pagination
+  const totalPages = Math.ceil(sortedMembers.length / itemsPerPage);
+
+  const requestSort = (key: keyof Member) => {
+    let direction: "ascending" | "descending" = "ascending";
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  // Fungsi untuk pagination
+  const handleNextPage = () => {
+    setCurrentPage((prev) => (prev < totalPages ? prev + 1 : prev));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
   return (
     <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-gray-700">
-        <h2 className="text-lg font-medium mb-2 sm:mb-0">Daftar Pengurus</h2>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <div className="relative">
-            <input type="text" placeholder="Cari pengurus..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="bg-gray-700 text-white text-sm rounded-lg pl-8 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-gray-700 gap-4">
+        <h2 className="text-lg font-medium text-white shrink-0">Daftar Pengurus</h2>
+
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+
+          {/* 1. Search Input (Sudah Benar) */}
+          <div className="relative w-full sm:w-auto">
+            <input
+              type="text"
+              placeholder="Cari nama, jabatan..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-gray-700 text-white text-sm rounded-lg pl-8 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            />
             <MdSearch className="absolute left-2.5 top-2.5 text-gray-400" />
           </div>
-          <div className="flex gap-2">
-            <select value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)} className="bg-gray-700 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+          {/* 2. Filter by Division Dropdown (Sudah Benar) */}
+          <div className="w-full sm:w-auto">
+            <label htmlFor="filter-divisi" className="sr-only">Filter Divisi</label>
+            <select
+              id="filter-divisi"
+              value={selectedFilter}
+              onChange={(e) => setSelectedFilter(e.target.value)}
+              className="bg-gray-700 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            >
               {filterOptions.map((option) => (
                 <option key={option} value={option}>
-                  {option}
+                  {option === "Semua" ? "Semua Divisi" : option}
                 </option>
               ))}
             </select>
-            <button className="bg-gray-700 p-2 rounded-lg hover:bg-gray-600 transition-colors">
-              <MdFilterList className="text-gray-300" />
+          </div>
+
+          {/* 3. Sort Controls (BARU & DIPERBAIKI) */}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <label htmlFor="sort-by" className="sr-only">Urutkan Berdasarkan</label>
+            {/* Dropdown untuk memilih kolom yang akan diurutkan */}
+            <select
+              id="sort-by"
+              value={sortConfig?.key || 'name'}
+              onChange={(e) => requestSort(e.target.value as keyof Member)}
+              className="bg-gray-700 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            >
+              <option value="name">Nama</option>
+              <option value="role">Jabatan</option>
+              <option value="division">Divisi</option>
+              <option value="year">Tahun</option>
+            </select>
+
+            {/* Tombol untuk mengubah arah urutan (Ascending/Descending) */}
+            <button
+              onClick={() => requestSort(sortConfig?.key || 'name')}
+              className="bg-gray-700 p-2 rounded-lg hover:bg-gray-600 transition-colors"
+              aria-label="Ubah arah urutan"
+            >
+              {sortConfig?.direction === 'ascending' ?
+                <MdArrowUpward className="text-gray-300 h-5 w-5" /> :
+                <MdArrowDownward className="text-gray-300 h-5 w-5" />
+              }
             </button>
           </div>
+
         </div>
       </div>
-      <div className="overflow-x-auto">
 
+
+      <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-700">
           <thead className="bg-gray-700/50">
             <tr>
@@ -150,8 +239,8 @@ export default function MemberTable({ refreshTrigger }: MemberTableProps) {
                   Memuat data anggota...
                 </td>
               </tr>
-            ) : filteredMembers.length > 0 ? (
-              filteredMembers.map((member) => (
+            ) : currentTableData.length > 0 ? (
+              currentTableData.map((member) => (
                 <tr key={member.id} className="hover:bg-gray-700/50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -190,16 +279,26 @@ export default function MemberTable({ refreshTrigger }: MemberTableProps) {
           </tbody>
         </table>
       </div>
-      <div className="px-6 py-3 flex flex-col sm:flex-row items-center justify-between border-t border-gray-700">
 
-        <div className="text-sm text-gray-400 mb-2 sm:mb-0">
-          Menampilkan <span className="font-medium">{filteredMembers.length}</span> dari <span className="font-medium">{members.length}</span> pengurus
+      <div className="flex items-center justify-between border-t border-gray-700 px-6 py-3">
+        {/* Info Jumlah Data */}
+        <div className="text-sm text-gray-400">
+          Menampilkan <span className="font-medium text-white">{currentTableData.length}</span> dari <span className="font-medium text-white">{sortedMembers.length}</span> pengurus
         </div>
 
-        <div className="flex space-x-1">
-          <button className="px-3 py-1 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors">Previous</button>
-          <button className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors">1</button>
-          <button className="px-3 py-1 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors">Next</button>
+        {/* Navigasi Halaman */}
+        <div className="flex items-center space-x-2">
+          <button onClick={handlePrevPage} disabled={currentPage === 1} className="px-3 py-1 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+            Previous
+          </button>
+
+          <span className="text-sm text-gray-300 font-medium">
+            Halaman {currentPage} dari {totalPages}
+          </span>
+
+          <button onClick={handleNextPage} disabled={currentPage === totalPages || totalPages === 0} className="px-3 py-1 rounded bg-gray-700 text-gray-300 hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+          </button>
         </div>
       </div>
 

@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'backend-framework-production.up.railway.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   }
 };

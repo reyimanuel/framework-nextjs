@@ -5,6 +5,7 @@ import Image from "next/image";
 import { MdClose, MdCloudUpload } from "react-icons/md";
 import type { GalleryItem, EditGalleryFormProps } from "@/app/admin/galeri/components/types/gallery";
 import { updateGallery } from "@/app/service/api";
+import toast from "react-hot-toast";
 
 type UpdatableGalleryData = Omit<GalleryItem, "id" | "image_url" | "created_at" | "updated_at">;
 
@@ -81,13 +82,13 @@ export default function EditGalleryForm({ item, isOpen, onClose, onSuccess }: Ed
 
         try {
             await updateGallery(item.id, data); // Panggil API update
-            alert("Perubahan berhasil disimpan!");
+            toast.success("Perubahan berhasil disimpan!");
             onSuccess(); // Panggil onSuccess untuk memicu refresh
             onClose(); // Tutup modal
         } catch (err) {
             console.error("Gagal memperbarui galeri:", err);
             const errorMessage = "Terjadi kesalahan saat menyimpan perubahan.";
-            setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setIsSubmitting(false);
         }

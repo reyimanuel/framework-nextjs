@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+// import Link from "next/link"
 import { FaUser } from "react-icons/fa"
 import PasswordInput from "@/app/admin/auth/components/PasswordInput"
 import InfoAlert from "@/app/admin/auth/components/InfoAlert"
@@ -105,9 +105,9 @@ export default function LoginForm() {
               Ingat saya
             </label>
           </div>
-          <Link href="/admin/forgot-password" className="text-sm text-blue-600 hover:underline">
+          {/* <Link href="/admin/forgot-password" className="text-sm text-blue-600 hover:underline">
             Lupa password?
-          </Link>
+          </Link> */}
         </div>
 
         {/* Tombol Login */}

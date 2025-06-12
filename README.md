@@ -46,3 +46,7 @@ bun dev
 ```
 
 5. Buka [http://localhost:3000](http://localhost:3000) dengan browser yang di-inginkan.
+
+
+![image](https://github.com/user-attachments/assets/ea8ab5c1-2bb4-4958-8cd5-4ebd789debe9)
+
